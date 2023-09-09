@@ -1,7 +1,8 @@
 """
+Lindsey Sullivan - 9/8/23
 
 Listens for task messages on the queue.
-This process runs continously. 
+This process runs continously. It will not terminate on it's own until the user submits ctrl + c input.
 
 Make as many listening workers as you need 
 (start this process in multiple terminals).

@@ -1,4 +1,5 @@
 """
+Lindsey Sullivan - 9/8/23
 
 Creates and sends a task message to the queue each execution.
 This process runs and finishes. 
