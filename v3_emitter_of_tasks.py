@@ -12,8 +12,10 @@ import sys
 import webbrowser
 import csv
 import time
-import logger
 import os
+
+from util_logger import setup_logger
+logger, logname = setup_logger(__file__)
 
 # Setup path to directory for CSV file
 os.chdir("/Users/lindseysullivan/Documents/School/Streaming-Data/Modules/streaming-04-multiple-consumers")
@@ -113,7 +115,7 @@ def stream_csv_messages (input_file_name: str,host: str,queue_name: str):
 if __name__ == "__main__":  
     # ask the user if they'd like to open the RabbitMQ Admin site
     # true shows the offer/false turns off the offer for the user
-    offer_rabbitmq_admin_site(show_offer=False)
+    offer_rabbitmq_admin_site(show_offer=True)
 
     # Stream messages from the CSV file and send them to RabbitMQ
     stream_csv_messages(INPUT_CSV_FILE,HOST,QUEUE)

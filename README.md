@@ -81,6 +81,39 @@ Which worker gets which tasks?
     - In order to debug this kind of mistake you can use rabbitmqctl to print the messages_unacknowledged field:
         - `sudo rabbitmqctl list_queues name messages_ready messages_unacknowledged`
 
+# V3 Project
+
+## Getting Started
+
+1. Fork this starter repo into your GitHub.
+1. Clone your repo down to your machine.
+1. View / Command Palette - then Python: Select Interpreter
+1. Select your conda environment. 
+
+## v3_emitter_of_tasks
+
+This program reads the CSV file declared in the constants and sends the tasks. It can also be determined if the user wants the RabbitMQ admin website to be prompted to open. 
+
+1. Delcare Consants
+    - The program declares constant for the CSV file, host, and queue. 
+1. offer_rabbitmq_admin_site
+    - Will offer the user to open the RabbitMQ admin website if the value is set to True.
+1. send_message
+    - This is the original send_message function. I left this in for the future if the function needs to be leveraged in future projects. This was chosen due to the Single Responsibility Principle.
+1. stream_csv_message
+    - Function that is called for v3. This reads the input file and sends each row as a message to the defined queue constant.
+
+
+## v3_listening_worker
+
+This program can be opened multiple times to use multiple workers. The program looks for the messages being sent and the worker processes the message and writes the received message to the csv file. 
+
+1. callback
+    - define a callback function to be called when a message is received. 
+    - csv.writer looks for the output_csv_file defined as a constant to write the received functions. 
+1. main
+    - the primary function that continuously listens for task messages on a named queue. Consumes messages and may print out an error message if necessary or prints a message if the user interrupts a program.
+
 ## Reference
 
 - [RabbitMQ Tutorial - Work Queues](https://www.rabbitmq.com/tutorials/tutorial-two-python.html)
@@ -89,3 +122,4 @@ Which worker gets which tasks?
 ## Screenshot
 
 See a running example with at least 3 concurrent process windows here:
+![Alt text](Screenshots/Multiple-Terminals-v3.png)

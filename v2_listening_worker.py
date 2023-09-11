@@ -1,4 +1,6 @@
 """
+    Lindsey Sullivan - 9/9/23
+    
     This program listens for work messages contiously. 
     Start multiple versions to add more workers.  
 

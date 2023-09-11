@@ -1,0 +1,8 @@
+2023-09-10 21:44:30,371.v3_emitter_of_tasks.INFO ==================================================
+2023-09-10 21:44:30,371.v3_emitter_of_tasks.INFO Today is 2023-09-10 at 09:44 PM
+2023-09-10 21:44:30,371.v3_emitter_of_tasks.INFO Running on: posix Darwin 22.6.0
+2023-09-10 21:44:30,371.v3_emitter_of_tasks.INFO Python version:  3.9.12
+2023-09-10 21:44:30,371.v3_emitter_of_tasks.INFO Python path: /Users/lindseysullivan/miniconda3
+2023-09-10 21:44:30,371.v3_emitter_of_tasks.INFO Working dir: /Users/lindseysullivan/Documents/School/Streaming-Data/Modules/streaming-04-multiple-consumers
+2023-09-10 21:44:30,371.v3_emitter_of_tasks.INFO ==================================================
+2023-09-10 21:44:32,005.v3_emitter_of_tasks.INFO Reading messages from tasks.csv...

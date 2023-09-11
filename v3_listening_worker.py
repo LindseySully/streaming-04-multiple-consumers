@@ -1,9 +1,9 @@
 """
     This program listens for work messages contiously. 
+    It looks for the messages and sends the messages to the CSV output file.
     Start multiple versions to add more workers.  
-
-    Author: Denise Case
-    Date: January 15, 2023
+    Original source code by Denise Case
+    Modifications to code for CSV file: Lindsey Sullivan - 9/10/23
 
 """
 
@@ -16,13 +16,21 @@ import csv
 OUTPUT_CSV_FILE = "received_messages.csv"
 
 # define a callback function to be called when a message is received
-def callback(ch, method, properties, body, csv_writer):
+def callback(ch, method, properties, body):
     """ Define behavior on getting a message."""
     # decode the binary message body to a string
     message = body.decode()
     print(f" [x] Received {message}")
     # simulate work by sleeping for the number of dots in the message
     time.sleep(len(message))
+    # Log message before writing to the CSV file
+    print(f" [x] Writing message to CSV: {message}")
+    # write task to csv file
+    with open(OUTPUT_CSV_FILE,"a",newline="")as csv_file:
+        writer = csv.writer(csv_file)
+        writer.writerow([message])
+    # Log message after writing to the CSV file
+    print(f" [x] Message written to CSV: {message}")
     # when done with task, tell the user
     print(" [x] Done.")
     # acknowledge the message was received and processed 
@@ -31,7 +39,7 @@ def callback(ch, method, properties, body, csv_writer):
 
 
 # define a main function to run the program
-def main(hn: str = "localhost", input_queue: str = "task_queue",output_csv: str = "output.csv"):
+def main(hn: str, input_queue: str,output_csv):
     """ Continuously listen for task messages on a named queue."""
 
     # when a statement can go wrong, use a try-except block
@@ -70,14 +78,12 @@ def main(hn: str = "localhost", input_queue: str = "task_queue",output_csv: str 
         channel.basic_qos(prefetch_count=1) 
 
         # open the CSV output file for writing
-        with open(output_csv,"w",newline="") as csv_file:
-            csv_writer = csv_writer(csv_file)
+        csv_file = open(output_csv, "w",newline="")
+        csv_writer = csv.writer(csv_file)
         # configure the channel to listen on a specific queue,  
         # use the callback function named callback,
         # and do not auto-acknowledge the message (let the callback handle it)
-        channel.basic_consume(queue=input_queue, 
-                              on_message_callback=lambda ch,method, properties, body:callback(ch,method,properties,body,csv_writer)
-                              )
+        channel.basic_consume(queue=input_queue, on_message_callback=callback, auto_ack=False)
 
         # print a message to the console for the user
         print(" [*] Ready for work. To exit press CTRL+C")
